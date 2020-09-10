@@ -1,0 +1,59 @@
+[
+  {
+    "value_type": "POLICY_TEXT",
+    "reg_option": "MUST_EXIST",
+    "description": "Windows Nessus is installed",
+    "key_item": "NESSUS_DIR",
+    "value_data": "HKLM|SOFTWARE|Tenable|Nessus",
+    "type": "REG_CHECK"
+  },
+  {
+    "value_type": "SERVICE_SET",
+    "svc_option": "CAN_NOT_BE_NULL",
+    "service_name": "Tenable Nessus",
+    "description": "The Windows Nessus service is set to run at boot.",
+    "value_data": "Automatic",
+    "type": "SERVICE_POLICY"
+  },
+  {
+    "value_type": "POLICY_TEXT",
+    "reg_option": "MUST_EXIST",
+    "description": "Windows Nessus is installed",
+    "key_item": "NESSUS_DIR",
+    "value_data": "HKLM|SOFTWARE|Tenable|Nessus",
+    "type": "REG_CHECK"
+  },
+  {
+    "value_type": "SERVICE_SET",
+    "svc_option": "CAN_NOT_BE_NULL",
+    "service_name": "Tenable Nessus",
+    "description": "Windows Nessus",
+    "value_data": "Manual || Disabled",
+    "type": "SERVICE_POLICY"
+  },
+  {
+    "value_type": "POLICY_TEXT",
+    "reg_option": "MUST_NOT_EXIST",
+    "description": "Windows Nessus is installed",
+    "key_item": "NESSUS_DIR",
+    "value_data": "HKLM|SOFTWARE|Tenable|Nessus",
+    "type": "REG_CHECK"
+  },
+  {
+    "value_type": "POLICY_TEXT",
+    "reg_option": "MUST_EXIST",
+    "description": "Windows Nessus is installed",
+    "key_item": "NESSUS_DIR",
+    "value_data": "HKLM|SOFTWARE|Tenable|Nessus",
+    "type": "REG_CHECK"
+  },
+  {
+    "expect": "ProfessionalFeed",
+    "value_type": "POLICY_TEXT",
+    "regex": "ProfessionalFeed",
+    "description": "Nessus Professional Feed check.",
+    "value_data": "C:|ProgramData|Tenable|Nessus|nessus|plugins|plugin_feed_info.inc",
+    "type": "FILE_CONTENT_CHECK",
+    "info": "This is used to determine if a Nessus scanner is using the Professional Feed or a Home Feed."
+  }
+]
