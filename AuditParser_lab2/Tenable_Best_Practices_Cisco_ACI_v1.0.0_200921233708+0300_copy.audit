@@ -1,0 +1,110 @@
+<Custom item>
+ severity : MEDIUM
+  info : "The state of the HTTP communication service. This can be enabled or disabled. The state can be:127.0.0.- Enabled- DisabledThe default is Enabled."
+  item : "^[\s]*no[\s]+admin-state-enable[\s]*$"
+  reference : "800-171|3.4.6,800-171|3.4.7,800-53|CM-7,CN-L3|7.1.3.5(c),CN-L3|7.1.3.7(d),CN-L3|8.1.4.4(b),CSF|PR.IP-1,CSF|PR.PT-3,ITSG-33|CM-7,NIAv2|SS13b,NIAv2|SS14a,NIAv2|SS14c,NIAv2|SS15a,SWIFT-CSCv1|2.3"
+ The FIPS mode can be one of the following:- Enable- DisableThe default is Disable.
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance."
+  context : "^[\s]*http[\s]*$"
+ type : CONFIG_CHECK
+  solution : "Log into the Cisco APIC Web Console:Navigate to 'Fabric' -> 'Fabric Policies'.Click 'Fabric Security'.Expand 'Policies'Expand 'Pod'Expand 'Management Access'For each 'Management Access' policy, in the 'HTTP' section, ensure 'Admin State' is set to 'Disabled'."
+ Repeat the following for all tenants:- Double click the tenant- Expand the tenant- Expand 'Policies'- Expand 'Protocol'- Expand 'First Hop Secuirty'- Expand 'Feature Policies'- For each policy, in the 'RA Guard' section, ensure 'Admin Status' is set to 'Enable'"
+ # Note: Variable @DATE_TIME_SERVER@ replaced with "127.0.0.1" in field "item".
+  description : "Management Access Policy - HTTP - Admin State"
+</Custom item>
+
+<Custom item>
+ severity : MEDIUM
+  info : "Set the Access-Control-Allow-Credentials header in the web server responses. Required in Cross-Origin Resource Sharing (CORS) scenario.- Disabled- EnabledThe default is Disabled."
+  item : "^[\s]*no[\s]+allow-credential[\s]*$"
+  reference : "800-171|3.4.6,800-171|3.4.7,800-53|CM-7,CN-L3|7.1.3.5(c),CN-L3|7.1.3.7(d),CN-L3|8.1.4.4(b),CSF|PR.IP-1,CSF|PR.PT-3,ITSG-33|CM-7,NIAv2|SS13b,NIAv2|SS14a,NIAv2|SS14c,NIAv2|SS15a,SWIFT-CSCv1|2.3"
+ The FIPS mode can be one of the following:- Enable- DisableThe default is Disable.
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance."
+  context : "^[\s]*https[\s]*$"
+ type : CONFIG_CHECK
+  solution : "Log into the Cisco APIC Web Console:Navigate to 'Fabric' -> 'Fabric Policies'.Click 'Fabric Security'.Expand 'Policies'Expand 'Pod'Expand 'Management Access'For each 'Management Access' policy, in the 'HTTPS' section, ensure 'Allow Credentials' is set to 'Disabled'."
+ Repeat the following for all tenants:- Double click the tenant- Expand the tenant- Expand 'Policies'- Expand 'Protocol'- Expand 'First Hop Secuirty'- Expand 'Feature Policies'- For each policy, in the 'RA Guard' section, ensure 'Admin Status' is set to 'Enable'"
+ # Note: Variable @DATE_TIME_SERVER@ replaced with "127.0.0.1" in field "item".
+  description : "Management Access Policy - HTTPS - Allow Credentials"
+</Custom item>
+
+<Custom item>
+ info : "The Secure Socket Layer (SSL) protocol. The protocol can be:- TLSv1- TLSv1.1- TLSv1.2The default is TLSv1.2."
+  context : "^[\s]*https[\s]*$"
+  solution : "Log into the Cisco APIC Web Console:Navigate to 'Fabric' -> 'Fabric Policies'.Click 'Fabric Security'.Expand 'Policies'Expand 'Pod'Expand 'Management Access'For each 'Management Access' policy, in the 'HTTPS' section, ensure 'SSL Protocols - TLSv1' is not checked."
+ # Note: Variable @DATE_TIME_SERVER@ replaced with "127.0.0.1" in field "item".
+  severity : MEDIUM
+  item : "^[\s]*ssl-protocols[\s]+"
+  reference : "800-171|3.13.11,800-53|SC-13,CSF|PR.DS-5,ISO/IEC-27001|A.10.1.1,ITSG-33|SC-13,NESA|M5.2.6,NESA|T7.4.1,NIAv2|CY3,NIAv2|CY4,NIAv2|CY5b,NIAv2|CY5c,NIAv2|CY5d,NIAv2|CY7,NIAv2|NS5e"
+ The FIPS mode can be one of the following:- Enable- DisableThe default is Disable.
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance."
+  regex : "TLSv1(,|[\s]|$)"
+ type : CONFIG_CHECK_NOT
+ Repeat the following for all tenants:- Double click the tenant- Expand the tenant- Expand 'Policies'- Expand 'Protocol'- Expand 'First Hop Secuirty'- Expand 'Feature Policies'- For each policy, in the 'RA Guard' section, ensure 'Admin Status' is set to 'Enable'"
+  description : "Management Access Policy - HTTPS - SSL Protocols - TLSv1"
+</Custom item>
+
+<Custom item>
+ info : "The Secure Socket Layer (SSL) protocol. The protocol can be:- TLSv1- TLSv1.1- TLSv1.2The default is TLSv1.2."
+  context : "^[\s]*https[\s]*$"
+  solution : "Log into the Cisco APIC Web Console:Navigate to 'Fabric' -> 'Fabric Policies'.Click 'Fabric Security'.Expand 'Policies'Expand 'Pod'Expand 'Management Access'For each 'Management Access' policy, in the 'HTTPS' section, ensure 'SSL Protocols - TLSv1.1' is not checked."
+ # Note: Variable @DATE_TIME_SERVER@ replaced with "127.0.0.1" in field "item".
+  severity : MEDIUM
+  item : "^[\s]*ssl-protocols[\s]+"
+  reference : "800-171|3.13.11,800-53|SC-13,CSF|PR.DS-5,ISO/IEC-27001|A.10.1.1,ITSG-33|SC-13,NESA|M5.2.6,NESA|T7.4.1,NIAv2|CY3,NIAv2|CY4,NIAv2|CY5b,NIAv2|CY5c,NIAv2|CY5d,NIAv2|CY7,NIAv2|NS5e"
+ The FIPS mode can be one of the following:- Enable- DisableThe default is Disable.
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance."
+  regex : "TLSv1.1(,|[\s]|$)"
+ type : CONFIG_CHECK_NOT
+ Repeat the following for all tenants:- Double click the tenant- Expand the tenant- Expand 'Policies'- Expand 'Protocol'- Expand 'First Hop Secuirty'- Expand 'Feature Policies'- For each policy, in the 'RA Guard' section, ensure 'Admin Status' is set to 'Enable'"
+  description : "Management Access Policy - HTTPS - SSL Protocols - TLSv1.1"
+</Custom item>
+
+<Custom item>
+ info : "The state of Telnet communication service. This can be enabled or disabled. The state can be:- Enabled- DisabledThe default is disabled."
+  context : "^[\s]*telnet[\s]*$"
+  solution : "Log into the Cisco APIC Web Console:Navigate to 'Fabric' -> 'Fabric Policies'.Click 'Fabric Security'.Expand 'Policies'Expand 'Pod'Expand 'Management Access'For each 'Management Access' policy, in the 'TELNET' section, ensure 'Admin State' is set to 'Disabled'."
+ # Note: Variable @DATE_TIME_SERVER@ replaced with "127.0.0.1" in field "item".
+  severity : MEDIUM
+  item : "^[\s]*no[\s]+admin-state-enable[\s]*$"
+  reference : "800-171|3.4.6,800-171|3.4.7,800-53|CM-7,CN-L3|7.1.3.5(c),CN-L3|7.1.3.7(d),CN-L3|8.1.4.4(b),CSF|PR.IP-1,CSF|PR.PT-3,ITSG-33|CM-7,NIAv2|SS13b,NIAv2|SS14a,NIAv2|SS14c,NIAv2|SS15a,SWIFT-CSCv1|2.3"
+ The FIPS mode can be one of the following:- Enable- DisableThe default is Disable.
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance."
+  regex : "TLSv1.1(,|[\s]|$)"
+ type : CONFIG_CHECK
+ Repeat the following for all tenants:- Double click the tenant- Expand the tenant- Expand 'Policies'- Expand 'Protocol'- Expand 'First Hop Secuirty'- Expand 'Feature Policies'- For each policy, in the 'RA Guard' section, ensure 'Admin Status' is set to 'Enable'"
+  description : "Management Access Policy - Telnet - Admin State"
+</Custom item>
+
+<Custom item>
+ info : "The state of the 'hmac-sha1' MAC (Message Authentication Code) algorithm(s) used for data integrity verification. The state can be:- Enabled- Disabled"
+  context : "^[\s]*ssh-service[\s]*$"
+  solution : "Log into the Cisco APIC Web Console:Navigate to 'Fabric' -> 'Fabric Policies'.Click 'Fabric Security'.Expand 'Policies'Expand 'Pod'Expand 'Management Access'For each 'Management Access' policy, in the 'SSH' section, ensure 'MACs - hmac-sha1' is not checked."
+ # Note: Variable @DATE_TIME_SERVER@ replaced with "127.0.0.1" in field "item".
+  severity : MEDIUM
+  item : "^[\s]*ssh-macs[\s]+"
+  reference : "800-171|3.13.11,800-53|SC-13,CSF|PR.DS-5,ISO/IEC-27001|A.10.1.1,ITSG-33|SC-13,NESA|M5.2.6,NESA|T7.4.1,NIAv2|CY3,NIAv2|CY4,NIAv2|CY5b,NIAv2|CY5c,NIAv2|CY5d,NIAv2|CY7,NIAv2|NS5e"
+ The FIPS mode can be one of the following:- Enable- DisableThe default is Disable.
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance."
+  regex : "hmac-sha1(,|[\s]|$)"
+ type : CONFIG_CHECK_NOT
+ Repeat the following for all tenants:- Double click the tenant- Expand the tenant- Expand 'Policies'- Expand 'Protocol'- Expand 'First Hop Secuirty'- Expand 'Feature Policies'- For each policy, in the 'RA Guard' section, ensure 'Admin Status' is set to 'Enable'"
+  description : "Management Access Policy - SSH - MACs - hmac-sha1"
+</Custom item>
+
+<Custom item>
+ info : "The state of SSH via the Web communication service. The state can be:- Enabled- DisabledThe default is Disabled."
+  context : "^[\s]*shellinabox[\s]*$"
+  solution : "Log into the Cisco APIC Web Console:Navigate to 'Fabric' -> 'Fabric Policies'.Click 'Fabric Security'.Expand 'Policies'Expand 'Pod'Expand 'Management Access'For each 'Management Access' policy, in the 'SSH access via WEB' section, ensure 'Admin State' is set to 'Disabled'."
+ # Note: Variable @DATE_TIME_SERVER@ replaced with "127.0.0.1" in field "item".
+  severity : MEDIUM
+  item : "^[\s]*no[\s]+admin-state-enable[\s]*$"
+  reference : "800-171|3.4.6,800-171|3.4.7,800-53|CM-7,CN-L3|7.1.3.5(c),CN-L3|7.1.3.7(d),CN-L3|8.1.4.4(b),CSF|PR.IP-1,CSF|PR.PT-3,ITSG-33|CM-7,NIAv2|SS13b,NIAv2|SS14a,NIAv2|SS14c,NIAv2|SS15a,SWIFT-CSCv1|2.3"
+ The FIPS mode can be one of the following:- Enable- DisableThe default is Disable.
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance."
+  regex : "hmac-sha1(,|[\s]|$)"
+ type : CONFIG_CHECK
+ Repeat the following for all tenants:- Double click the tenant- Expand the tenant- Expand 'Policies'- Expand 'Protocol'- Expand 'First Hop Secuirty'- Expand 'Feature Policies'- For each policy, in the 'RA Guard' section, ensure 'Admin Status' is set to 'Enable'"
+  description : "Management Access Policy - SSH Access Via Web - Admin State"
+</Custom item>
+

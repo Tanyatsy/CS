@@ -1,0 +1,85 @@
+<Custom item>
+ value_type : POLICY_TEXT
+  severity : MEDIUM
+  see_also : "https://workbench.cisecurity.org/files/1654"
+  info : "Use an IP address rather than a hostname to connect to the host of the DB2 instance.Using a hostname to connect to a DB2 instance can display useful information about the host to an attacker. For example, hostnames for DB2 instances often contain the DB2 version number, host type, or operating system type."
+  value_data : "= [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\s*$"
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance."
+  reference : "800-171|3.4.2,800-53|CM-6,CN-L3|8.1.10.6(d),CSCv6|3.1,CSF|PR.IP-1,ITSG-33|CM-6,LEVEL|1S,NESA|T3.2.1,PCI-DSSv3.1|2.2.4,PCI-DSSv3.2|2.2.4,SWIFT-CSCv1|2.3"
+ type : AUDIT_POWERSHELL
+  solution : "To reconfigure the connection string, launch the DB2 Configuration Assistant and change the connection's Hostname value from a text name to an IP address."
+  check_type : CHECK_REGEX
+  description : "1.2 Use IP address rather than hostname"
+  powershell_args : "set-item -path env:DB2CLP -value '**$$**' | Invoke-Command -ScriptBlock {db2 list node directory show detail} | Select-String '^\s*Hostname\s*='"
+</Custom item>
+
+<Custom item>
+2. Run the following command from the DB2 command window to change the default file path, if necessary:
+  info : "The dftdbpath parameter contains the default file path used to create DB2 databases. It is recommended that the permissions for this directory be set to full access for DB2 administrators and read and execute access only for all other accounts. It is also recommended that this directory be owned by the DB2 Administrator.Restricting access to the directory used as the default file path through permissions will help ensure that the confidentiality, integrity, and availability of the files there are protected."
+ For Linux:1. Connect to the DB2 host2. Change to the $DB2PATH/sqllib directory
+ 3. Change the permission level of the directory to this recommended value:OS => chmod -R 750
+ Additional steps for Windows:1. Connect to the DB2 host2. Right-click over the directory used as the default file path3. Choose Properties4. Select the Security tab5. Assign ownership of the directory to the DB2 Administrator6. Grant all DB administrator accounts the Full Control authority7. Grant only read and execute privileges to all other users (revoke all other privileges)
+  solution : "For Windows and Linux:1. Attach to the DB2 instance.
+  check_type : CHECK_REGEX
+ # Note: Variable @LOG_ARCH_PATH_1@ replaced with "C:\\archive1" in field "powershell_args".
+ 2. Run the following command from the DB2 command window:db2 => update database manager configuration using authentication data_encrypt
+  severity : MEDIUM
+ chown -R <new user name>:<new group name> $DB2PATH
+  see_also : "https://workbench.cisecurity.org/files/1654"
+  value_data : "LOGARCHMETH1 = [A-Z]:\.*"
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance."
+ Additional steps for Linux:1. Connect to the DB2 host2. Change to the directory used as the default file path3. Assign the DB2 Administrator to be the owner of the directory using the chown command4. Change the permissions for the directoryOS => chmod -R 755
+ Notes:Review the impact of changing the usernames before performing this global change."
+  description : "Variable LOG_ARCH_PATH_1 has value"
+ For Linux, perform the following command:
+ Default Value:The default value for this directory is read and write access for non-administrator accounts."
+  file : "/home/db2inst1/db2inst1/NODE0000/database/T0000001/C0000000.TMP"
+ 1. Attach to the DB2 instance:db2 => attach to $DB2INSTANCE
+  value_type : POLICY_TEXT
+ Linux: $DB2PATH/sqllib is owned by the DB2 administrator with read, write, and execute access.
+  reference : "800-171|3.3.8,800-171|3.3.9,800-53|AU-9(4),CN-L3|8.1.4.3(d),CSF|PR.PT-1,ITSG-33|AU-9(4),LEVEL|1S,NESA|M1.2.2,NESA|M5.2.3,NESA|M5.5.2,SWIFT-CSCv1|5.1"
+ type : AUDIT_POWERSHELL
+ MS Windows: %DB2PATH%\sqllib owned by the DB2 administrator with read, write, and execute access."
+  powershell_args : "'LOGARCHMETH1 = C:\\archive1'"
+</Custom item>
+
+<Custom item>
+2. Run the following command from the DB2 command window to change the default file path, if necessary:
+  info : "The failarchpath parameter specifies the type of media and the location used as the tertiary destination for archived logs. It is recommended that the directory used for the archived logs be set to full access for DB2 administrator accounts and read and execute only for all other accounts.
+ For Linux:1. Connect to the DB2 host2. Change to the $DB2PATH/sqllib directory
+ 3. Change the permission level of the directory to this recommended value:OS => chmod -R 750
+ Additional steps for Windows:1. Connect to the DB2 host2. Right-click over the directory used as the default file path3. Choose Properties4. Select the Security tab5. Assign ownership of the directory to the DB2 Administrator6. Grant all DB administrator accounts the Full Control authority7. Grant only read and execute privileges to all other users (revoke all other privileges)
+ Additional steps for Linux (assuming that the logarchmeth1 parameter includes DISK):1. Connect to the DB2 host2. Change to the primary archive log directory3. Change the permissions for the directoryOS => chmod -R 755
+  solution : "For Windows and Linux:1. Attach to the DB2 instance.
+  check_type : CHECK_REGEX
+ # Note: Variable @MIRROR_LOG_PATH@ replaced with "C:\\mirror_logs" in field "powershell_args".
+ 2. Run the following command from the DB2 command window:db2 => update database manager configuration using authentication data_encrypt
+  severity : MEDIUM
+ chown -R <new user name>:<new group name> $DB2PATH
+ Additional steps for Linux (assuming that the logarchmeth2 parameter includes DISK):1. Connect to the DB2 host2. Change to the secondary archive log directory3. Change the permissions for the directoryOS => chmod -R 755
+  see_also : "https://workbench.cisecurity.org/files/1654"
+  value_data : "MIRRORLOGPATH = [A-Z]:\.*"
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance. If FAIL_ARCH_PATH variable was not set, to a file path, the permissions could be supplied."
+ Additional steps for Windows (assuming that the logarchmeth1 parameter includes DISK):1. Connect to the DB2 host2. Right-click on the primary archive log directory3. Choose Properties4. Select the Security tab5. Grant all DB2 administrator accounts the Full Control authority6. Grant all other accounts read and execute privileges only (revoke all other privileges)
+ 2. Run the following command from the DB2 command window to change the tertiary archive log directory, if necessary:db2 => update database configuration using failarchpath
+ Additional steps for Linux:1. Connect to the DB2 host2. Change to the directory used as the default file path3. Assign the DB2 Administrator to be the owner of the directory using the chown command4. Change the permissions for the directoryOS => chmod -R 755
+ Rationale:Restricting access to the contents of the tertiary archive log directory will help ensure that the confidentiality, integrity, and availability of archive logs are protected.Although there are many ways to ensure that your logs will be archived, we recommend using the value of DISK as part of the failarchpath parameter. This will properly ensure that the logs are archived. A finding of OFF is not acceptable.
+ 2. Run the following command from the DB2 command window to change the secondary archive log directory, if necessary:db2 => update database configuration using logarchmeth2
+ Notes:Review the impact of changing the usernames before performing this global change."
+  description : "Variable MIRROR_LOG_PATH has value"
+ For Linux, perform the following command:
+ Default Value:The default value for FAILARCHPATH is null."
+  file : "C:\\failed_archives"
+ Additional steps for Windows (assuming that the failarchpath parameter includes DISK):1. Connect to the DB2 host2. Right-click on the tertiary archive log directory3. Choose Properties4. Select the Security tab5. Grant all DB2 administrator accounts the Full Control authority6. Grant all other accounts read and execute privileges only (revoke all other privileges)
+ 1. Attach to the DB2 instance:db2 => attach to $DB2INSTANCE
+ Additional steps for Linux (assuming that the failarchpath parameter includes DISK):1. Connect to the DB2 host2. Change to the tertiary archive log directory3. Change the permissions for the directoryOS => chmod -R 755
+  value_type : POLICY_TEXT
+ Additional steps for Windows (assuming that the logarchmeth2 parameter includes DISK):1. Connect to the DB2 host2. Right-click on the secondary archive log directory3. Choose Properties4. Select the Security tab5. Grant all DB2 administrator accounts the Full Control authority6. Grant all other accounts read and execute privileges only (revoke all other privileges)
+ Linux: $DB2PATH/sqllib is owned by the DB2 administrator with read, write, and execute access.
+  reference : "800-171|3.3.8,800-171|3.3.9,800-53|AU-9(4),CN-L3|8.1.4.3(d),CSF|PR.PT-1,ITSG-33|AU-9(4),LEVEL|1S,NESA|M1.2.2,NESA|M5.2.3,NESA|M5.5.2,SWIFT-CSCv1|5.1"
+ type : AUDIT_POWERSHELL
+ MS Windows: %DB2PATH%\sqllib owned by the DB2 administrator with read, write, and execute access."
+ 2. Run the following command from the DB2 command window to change the primary archive log directory, if necessary:db2 => update database configuration using logarchmeth1 <valid directory>
+  powershell_args : "'MIRRORLOGPATH = C:\\mirror_logs'"
+</Custom item>
+

@@ -1,0 +1,62 @@
+<Custom item>
+ info : "The contents of the CLI informational banner to be displayed before user login authentication. The CLI banner is a text based string printed as-is to the console."
+  item : "^[\s]*aaa[\s]+banner[\s]+['\"]Authorized Users Only['\"]"
+  reference : "800-171|3.1.9,800-53|AC-8,ITSG-33|AC-8,NESA|M1.3.6,NESA|M5.2.5,NESA|T5.5.1,NIAv2|AM10a,NIAv2|AM10b,NIAv2|AM10c,NIAv2|AM10d,NIAv2|AM10e,TBA-FIISB|45.2.4"
+ type : CONFIG_CHECK
+  solution : "Log into the Cisco APIC Web Console:Navigate to 'System' -> 'System Settings'.Expand 'System Alias and Banners'.Set 'Controller CLI Banner' to an appropriate value for your environment."
+ # Note: Variable @BANNER_TEXT_CONTROLLER@ replaced with "Authorized Users Only" in field "item".
+  description : "System Alias and Banners - Controller CLI Banner"
+</Custom item>
+
+<Custom item>
+ severity : MEDIUM
+  info : "The user-configured NTP provider name. This name can be between 1 and 64 alphanumeric characters. Note that you cannot change this name after the object has been saved."
+  item : "^[\s]*server[\s]+127.0.0.1[\s]+"
+  reference : "800-171|3.3.7,800-53|AU-8(1),CSF|PR.PT-1,ISO/IEC-27001|A.12.4.4,ITSG-33|AU-8(1),NESA|T3.6.7,NIAv2|NS44,NIAv2|NS45,NIAv2|NS46,NIAv2|NS47"
+ The FIPS mode can be one of the following:- Enable- DisableThe default is Disable.
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance."
+  context : "^[\s]*template[\s]+ntp-fabric[\s]+.+"
+ type : CONFIG_CHECK
+  solution : "Log into the Cisco APIC Web Console:Navigate to 'Fabric' -> 'Fabric Policies'.Click 'Fabric Security'.Expand 'Policies'Expand 'Pod'Expand 'Date and Time'Expand each 'Date and Time Policy'For each 'Provider', ensure 'Host Name/IP Address' is set to an appropriate value for your environment."
+ Repeat the following for all tenants:- Double click the tenant- Expand the tenant- Expand 'Policies'- Expand 'Protocol'- Expand 'First Hop Secuirty'- Expand 'Feature Policies'- For each policy, in the 'RA Guard' section, ensure 'Admin Status' is set to 'Enable'"
+ # Note: Variable @DATE_TIME_SERVER@ replaced with "127.0.0.1" in field "item".
+  description : "Policies - Pod - Date and Time Policy - Host"
+</Custom item>
+
+<Custom item>
+ info : "The default security method for processing authentication requests. The realm allows the protected resources on the associated server to be partitioned into a set of protection spaces, each with its own authentication authorization database. The methods can be:- Local - Uses the local username or password database for authentication.- RADIUS - Uses the global pool of RADIUS servers for authentication.- TACACS+ - Uses the global pool of TACACS+ servers for authentication.- LDAP - Uses the global pool of LDAP servers for authentication.- RSA - Uses the global pool of RSA servers for authentication.- SAML - Uses the SAML server for authentication.The default realm is Local, but can be changed.
+  context : "^[\s]*aaa[\s]+authentication[\s]+login[\s]+console[\s]*$"
+  solution : "Log into the Cisco APIC Web Console:Navigate to 'Admin' -> 'AAA' -> 'Authentication'In the 'Console Authentication' section ensure 'Realm' is not set to 'Local'"
+ # Note: Variable @DNS_SERVER_2@ replaced with "127.0.0.1" in field "item".
+  severity : MEDIUM
+  item : "^[\s]*realm[\s]+local[\s]*$"
+  reference : "800-53|AC-6(3),CSF|PR.AC-4,ISO/IEC-27001|A.9.1.2,ISO/IEC-27001|A.9.4.4,ITSG-33|AC-6(3),NESA|T5.1.1,NESA|T5.5.4,SWIFT-CSCv1|5.1"
+ The FIPS mode can be one of the following:- Enable- DisableThe default is Disable.
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance."
+  regex : "hmac-sha1(,|[\s]|$)"
+ Note: If LDAP, RADIUS, or TACACS+ is specified as the default security method and the associated provider group specified in this dialog is not available to provide authentication during a user login, fallback local authentication is not executed by the APIC server unless is specifically configured to do so."
+ type : CONFIG_CHECK_NOT
+ Repeat the following for all tenants:- Double click the tenant- Expand the tenant- Expand 'Policies'- Expand 'Protocol'- Expand 'First Hop Secuirty'- Expand 'Feature Policies'- For each policy, in the 'RA Guard' section, ensure 'Admin Status' is set to 'Enable'"
+  description : "Console Authentication Realm"
+</Custom item>
+
+<Custom item>
+ info : "The session record flags are specified as a comma-separated value list of one or more of the following flags: login, logout, and refresh. This option specifies whether logout entries should be included in the Session records. The default is enabled."
+  context : "^[\s]*template[\s]+snmp-fabric[\s]+"
+  solution : "Log into the Cisco APIC SSH Console:Enter 'configure' modeEnsure session-record-flags includes a value of logout"
+ # Note: Variable @PASSWORD_HISTORY@ replaced with "5" in field "item".
+  severity : MEDIUM
+  item : "^[\s]*snmp-server[\s]+host[\s]+"
+  reference : "800-171|3.3.1,800-171|3.3.2,800-53|AU-12,CN-L3|7.1.3.3(a),CN-L3|7.1.3.3(b),CN-L3|7.1.3.3(c),CN-L3|8.1.3.5(a),CN-L3|8.1.3.5(b),CN-L3|8.1.4.3(a),CSF|DE.CM-1,CSF|DE.CM-3,CSF|DE.CM-7,CSF|PR.PT-1,ISO/IEC-27001|A.12.4.1,ITSG-33|AU-12,NESA|T3.6.2,NESA|T3.6.5,NESA|T3.6.6,NIAv2|SM8,SWIFT-CSCv1|6.4,TBA-FIISB|45.1.1"
+ The FIPS mode can be one of the following:- Enable- DisableThe default is Disable.
+ NOTE: Nessus has provided the target output to assist in reviewing the benchmark to ensure target compliance."
+  regex : "hmac-sha1(,|[\s]|$)"
+ - Must contain at least three of the following:- Lower case letters- Upper case letters- Digits- Special characters- Must not contain a character that is repeated more than three times consecutively, such as aaabbb.- Must not be identical to the username or the reverse of the username.- Must pass a password dictionary check. For example, the password must not be based on a standard dictionary word.
+ The options are:- Yes - Enforces password strength.- No - Disables the password strength checking.The default is Yes."
+ Note: You must have admin or aaa privileges to change the password profile properties."
+ - Must not contain the following symbols: $ (dollar sign), ? (question mark), and = (equals sign).- Should not be blank for local user and admin accounts.
+ type : CONFIG_CHECK
+ Repeat the following for all tenants:- Double click the tenant- Expand the tenant- Expand 'Policies'- Expand 'Protocol'- Expand 'First Hop Secuirty'- Expand 'Feature Policies'- For each policy, in the 'RA Guard' section, ensure 'Admin Status' is set to 'Enable'"
+  description : "Check if SNMP Host configured"
+</Custom item>
+
