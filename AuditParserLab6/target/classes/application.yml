@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    config:
+      enabled: false
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: b935fa81e27a1f463b26
+            clientSecret: 96a2c9d079d8e12e32088c4fb1fe55b36f078a4b
+
+          google:
+            clientId: 430690954248-1uu4elpkco71oja3aggussep0orto3ej.apps.googleusercontent.com
+            clientSecret: zMd4QolViZIKwPg0yEUsEG-3
+
+          facebook:
+            clientId: 4806503812723620
+            clientSecret: d4950aa4454e9882f3eb2af1bd3c3de0

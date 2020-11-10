@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>SSO Project </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body>
+<div class="login-wrapper">
+    <style>
+        #login {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #login a {
+            width: 300px;
+            margin-bottom: 10px;
+            margin-left: -62px;
+            padding: 20px 0 20px 50px;
+        }
+
+        .button-wrapper {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .button-wrapper img {
+            width: 60px;
+            height: 60px;
+            z-index: 1;
+            background-color: white;
+            border-radius: 5px;
+            padding: 7px;
+            margin: 1px;
+            pointer-events: none;
+        }
+
+    </style>
+    <div id="login">
+        <h1>Login with OAuth2</h1>
+        <p>Choose app in order to sign in: </p>
+        <div class="button-wrapper">
+            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GithubLogo">
+            <a href="/oauth2/authorization/github" class="btn btn-info" role="button">Login with Github</a>
+        </div>
+        <div class="button-wrapper">
+            <img src="https://www.duupdates.in/wp-content/uploads/2020/07/google.jpg" alt="Google Logo">
+            <a href="/oauth2/authorization/google" class="btn btn-info" role="button">Login with Google</a>
+        </div>
+        <div class="button-wrapper">
+            <img src="https://i.pinimg.com/originals/30/99/af/3099aff4115ee20f43e3cdad04f59c48.png" alt="Facebook Logo">
+            <a href="/oauth2/authorization/facebook" class="btn btn-info" role="button">Login with Facebook</a>
+        </div>
+    </div>
+</div>
+
+<div id="welcome" style="display:none">
+    Welcome <span id="name"></span> |
+    <button onClick="logout()">Logout</button>
+</div>
+<script>
+    fetch('/user')
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Something went wrong');
+            }
+        })
+        .then(data => {
+            document.getElementById('name').innerText = data.name;
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('welcome').style.display = 'block';
+        })
+        .catch((error) => {
+            console.error('Error: ', error);
+        });
+
+    function logout() {
+        fetch('/logout', {
+            method: 'POST',
+            headers: {
+                'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
+            }
+        })
+            .then((response) => {
+                if (response.ok) {
+                    document.getElementById('login').style.display = 'block';
+                    document.getElementById('welcome').style.display = 'none';
+                } else {
+                    throw new Error('Something went wrong');
+                }
+            })
+            .catch((error) => {
+                console.error('Error: ', error);
+            });
+    }
+
+    function getCookie(name) {
+        var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return v ? v[2] : null;
+    }
+</script>
+</body>
+</html>
