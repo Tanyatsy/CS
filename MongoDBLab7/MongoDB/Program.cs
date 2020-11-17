@@ -1,12 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using MongoDB.Bson;
-using MongoDB.Driver;
-
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MongoDB
 {
@@ -23,26 +20,37 @@ namespace MongoDB
 
             var document = new BsonDocument();
 
-
             BsonDocument firstEmployee =
-        new BsonDocument { { "JobPlace", "XOR" }, { "fullName", "Tatiana Tiguliova" }, { "email", "tanyatsy00@gmail.com" }, { "dateBirth", "6/08/2000" }, { "proffesion", "back-end dev." } }
-             ;
+                new BsonDocument {
+                    { "JobPlace", "XOR" },
+                    { "fullName", "Tatiana Tiguliova" },
+                    { "email", "tanyatsy00@gmail.com" },
+                    { "dateBirth", "6/08/2000" },
+                    { "proffesion", "back-end dev." }
+                };
 
-
-            BsonDocument secondEmployee =
-        new BsonDocument { { "JobPlace", "XOR" }, { "fullName", "Margareta Galaju" }, { "email", "margolu4shaya@gmail.com" }, { "dateBirth", "3/06/2001" }, { "proffesion", "front-end dev." } }
-             ;
-
+           BsonDocument secondEmployee =
+                new BsonDocument { 
+                    { "JobPlace", "XOR" },
+                    { "fullName", "Margareta Galaju" },
+                    { "email", "margolu4shaya@gmail.com" },
+                    { "dateBirth", "3/06/2001" },
+                    { "proffesion", "front-end dev." }
+                };
 
             BsonDocument thirdEmployee =
-        new BsonDocument { { "JobPlace", "XOR" }, { "fullName", "Garciu Eugenia" }, { "email", "Jenikalu4shaya@gmail.com" }, { "dateBirth", "18/11/1999" }, { "proffesion", "back-end dev." } }
-             ;
+                new BsonDocument {
+                    { "JobPlace", "XOR" },
+                    { "fullName", "Garciu Eugenia" },
+                    { "email", "Jenikalu4shaya@gmail.com" },
+                    { "dateBirth", "18/11/1999" },
+                    { "proffesion", "back-end dev." }
+                };
 
 
             database.DropCollection("employees");
 
             collection.InsertMany(new List<BsonDocument> { firstEmployee, secondEmployee, thirdEmployee });
-
 
             randomWord = GenerateWord();
             Console.WriteLine(document.ToString());
@@ -50,17 +58,14 @@ namespace MongoDB
             var result = collection.Find(filter).ToList();
 
             updateDBWithEncryptedValue("email", result, collection);
-/*
-            updateDBWithDecryptedValue("email", result, collection);*/
 
+            updateDBWithDecryptedValue("email", result, collection);
         }
 
         public static void updateDBWithEncryptedValue(string dbField, List<BsonDocument> filtersResult, IMongoCollection<BsonDocument> collection)
         {
-
             foreach (var doc in filtersResult)
             {
-
 
                 var value = doc.GetValue(dbField);
 
@@ -81,7 +86,6 @@ namespace MongoDB
 
         public static void updateDBWithDecryptedValue(string dbField, List<BsonDocument> filtersResult, IMongoCollection<BsonDocument> collection)
         {
-
             foreach (var doc in filtersResult)
             {
                 var value = doc.GetValue(dbField);
@@ -148,23 +152,16 @@ namespace MongoDB
             string word = "";
             char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
-
             Random rand = new Random();
-
 
             for (int i = 1; i <= 1; i++)
             {
-
-
                 for (int j = 1; j <= 7; j++)
                 {
-
                     int letter_num = rand.Next(0, letters.Length - 1);
-
 
                     word += letters[letter_num];
                 }
-
 
             }
             return word;
